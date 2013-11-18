@@ -1,0 +1,67 @@
+<head>
+    <title>Who wants a Schwartz Bros Restaurant?</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        {{>content}}
+    </div>
+</body>
+
+<template name="content">
+    <div class="page-header">
+        <h1>Who wants a Schwartz Bros Restaurant? <small>say if you do or don't</small></h1>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <div class="well well-small">
+                {{loginButtons}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            {{#if currentUser}}
+                {{#if currentUser.profile.vote }}
+                    <h2 class="alert alert-success">Thanks for voting!</h2>
+                {{else}}
+                    <div class="well well-large">
+                        <button id="yes" class="btn btn-success">Yes</button>
+                        <button id="no" class="btn btn-danger">No</button>
+                    </div>
+                {{/if}}
+            {{/if}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            {{#if yeses}}
+                <div class="well">
+                    {{yeses.count}} say Yes. That's {{#if percentageYeses}}{{percentageYeses}}{{else}}0{{/if}}%.
+                </div>
+            {{/if}}
+            {{#if nos}}
+                <div class="well">
+                    {{nos.count}} say No. That's {{#unless percentageNos}}0{{else}}{{percentageNos}}{{/unless}}%.
+                </div>
+            {{/if}}
+            <table class="table">
+                {{#each votes}}
+                    {{>result}}
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</template>
+
+
+<template name="result">
+<tr>
+    <td>
+        <a href="http://twitter.com/{{services.twitter.screenName}}">
+            {{profile.name}}
+        </a>
+        said {{profile.vote}}
+    </td>
+</tr>
+</template>
